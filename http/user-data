@@ -1,0 +1,20 @@
+#cloud-config
+autoinstall:
+  version: 1
+  locale: en_US.UTF-8
+  keyboard:
+    layout: us
+  identity:
+    hostname: ubuntu-template
+    username: nekoneki
+    password: "$6$exouser$PW1v8KU0g.A4m1Gg8Ww/Kq3r84Q6w.u0m6h2O8Oq8/e.H1z78w.A.9HqM1s0u.A8/Q8E9d2W4G8" 
+  ssh:
+    install-server: yes
+    allow-pw: yes
+    authorized-keys:
+      - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPlgr6HBDD57IgEAR2D+dMnj8u/2It1uo9OkqgfaVQin proxmox-vm"
+  packages:
+    - qemu-guest-agent
+  late-commands:
+    - echo 'nekoneki ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/nekoneki
+    - chmod 440 /target/etc/sudoers.d/nekoneki

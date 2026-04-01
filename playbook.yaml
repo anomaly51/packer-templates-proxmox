@@ -1,0 +1,9 @@
+---
+- name: Setup Ubuntu Template
+  hosts: all
+  become: yes
+  vars:
+    zsh_user: nekoneki
+  tasks:
+    - ansible.builtin.import_tasks: tasks/setup_zsh.yaml
+    - ansible.builtin.import_tasks: tasks/cleanup_template.yaml

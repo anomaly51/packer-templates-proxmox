@@ -1,0 +1,61 @@
+---
+- name: Install required packages
+  ansible.builtin.apt:
+    name: 
+      - zsh
+      - git
+      - curl
+    state: present
+    update_cache: yes
+
+- name: Change default shell for user
+  ansible.builtin.user:
+    name: "{{ zsh_user }}"
+    shell: /bin/zsh
+
+- name: Clone Oh My Zsh repository
+  become: yes
+  become_user: "{{ zsh_user }}"
+  ansible.builtin.git:
+    repo: https://github.com/ohmyzsh/ohmyzsh.git
+    dest: "~{{ zsh_user }}/.oh-my-zsh"
+    depth: 1
+    version: master
+
+- name: Clone zsh-autosuggestions plugin
+  become: yes
+  become_user: "{{ zsh_user }}"
+  ansible.builtin.git:
+    repo: https://github.com/zsh-users/zsh-autosuggestions.git
+    dest: "~{{ zsh_user }}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+    depth: 1
+
+- name: Clone zsh-syntax-highlighting plugin
+  become: yes
+  become_user: "{{ zsh_user }}"
+  ansible.builtin.git:
+    repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
+    dest: "~{{ zsh_user }}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
+    depth: 1
+
+- name: Create fully custom .zshrc
+  become: yes
+  become_user: "{{ zsh_user }}"
+  ansible.builtin.copy:
+    dest: "~{{ zsh_user }}/.zshrc"
+    mode: '0644'
+    content: |
+      export ZSH="~{{ zsh_user }}/.oh-my-zsh"
+
+      ZSH_THEME="cloud"
+
+      plugins=(
+          git
+          sudo
+          docker
+          docker-compose
+          zsh-autosuggestions
+          zsh-syntax-highlighting
+      )
+
+      source $ZSH/oh-my-zsh.sh

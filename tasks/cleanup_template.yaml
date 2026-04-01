@@ -1,0 +1,20 @@
+---
+- name: Clean cloud-init state
+  ansible.builtin.command: cloud-init clean --logs
+
+- name: Clear machine-id
+  ansible.builtin.copy:
+    content: ""
+    dest: /etc/machine-id
+    mode: '0444'
+
+- name: Remove dbus machine-id
+  ansible.builtin.file:
+    path: /var/lib/dbus/machine-id
+    state: absent
+
+- name: Create dbus machine-id symlink
+  ansible.builtin.file:
+    src: /etc/machine-id
+    dest: /var/lib/dbus/machine-id
+    state: link
