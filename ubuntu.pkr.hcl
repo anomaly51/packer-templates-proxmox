@@ -1,3 +1,11 @@
+variable "target_node" {
+  type = string
+}
+
+variable "template_vmid" {
+  type = number
+}
+
 packer {
   required_plugins {
     proxmox = {
@@ -17,13 +25,13 @@ source "proxmox-iso" "ubuntu" {
   password                 = "4355"
   insecure_skip_tls_verify = true
 
-  node                 = "machine-1"
-  vm_id                = 20000
+  node                 = var.target_node
+  vm_id                = var.template_vmid
   vm_name              = "ubuntu-server-template"
-  template_description = "Ubuntu Server 22.04 Template"
+  template_description = "Ubuntu Server Template on ${var.target_node}"
 
-  cores      = 8
-  memory     = 4096
+  cores      = 4
+  memory     = 2048
   os         = "l26"
   qemu_agent = true
 
