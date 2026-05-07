@@ -1,0 +1,7 @@
+---
+collections:
+  - name: nekoneki.core
+    source: https://github.com/anomaly51/ansible-infra.git
+    type: git
+    version: main
+

@@ -1,0 +1,2 @@
+---
+- ansible.builtin.import_playbook: nekoneki.core.packer-debian-k3s
