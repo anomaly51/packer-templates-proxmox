@@ -1,2 +1,10 @@
 ---
-- ansible.builtin.import_playbook: nekoneki.core.packer-debian-omv
+- name: Setup Proxmox OpenMediaVault Template
+  hosts: all
+  become: yes
+  vars:
+    zsh_user: nekoneki
+  roles:
+    - nekoneki.core.debian_base
+    - nekoneki.core.openmediavault
+

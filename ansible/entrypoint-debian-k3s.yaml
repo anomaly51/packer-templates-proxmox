@@ -1,2 +1,10 @@
 ---
-- ansible.builtin.import_playbook: nekoneki.core.packer-debian-k3s
+- name: Setup Proxmox K3s Template
+  hosts: all
+  become: yes
+  vars:
+    zsh_user: nekoneki
+  roles:
+    - nekoneki.core.debian_base
+    - nekoneki.core.k3s_prep
+

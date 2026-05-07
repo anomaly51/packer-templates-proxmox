@@ -1,2 +1,9 @@
 ---
-- ansible.builtin.import_playbook: nekoneki.core.packer-debian-base
+- name: Setup Proxmox Base Template
+  hosts: all
+  become: yes
+  vars:
+    zsh_user: nekoneki
+  roles:
+    - nekoneki.core.debian_base
+
